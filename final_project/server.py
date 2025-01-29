@@ -1,3 +1,8 @@
+'''Executing this function initiates the motion detection
+analysis to be executed over the Flask channel and be deployed
+on localhost:5000.
+'''
+
 from flask import Flask, render_template, request, jsonify
 
 from EmotionDetection.emotion_detection import emotion_detector
@@ -17,7 +22,7 @@ def sent_detector():
     Analyze the user-provided text for emotions and return the result.
     """
     text_to_detect = request.args.get('textToAnalyze')
-    
+
     if not text_to_detect:
         return jsonify({'error': 'Invalid request. Please provide textToAnalyze parameter.'}), 400
 
@@ -43,9 +48,11 @@ def render_index_page():
     '''
     return render_template('index.html')
 
-# Custom error handler for 500 Internal Server Error
 @app.errorhandler(500)
-def internal_server_error(error):
+def internal_server_error():
+    '''This function initiates custom error handling for 500
+    Internal Server Error
+    '''
     return jsonify({'error': 'Internal Server Error'}), 500
 
 if __name__ == "__main__":
